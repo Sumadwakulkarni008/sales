@@ -1,5 +1,11 @@
 # 📊 Sales Analytics Dashboard
+## 🚀 Live Demo
 
+**Live Dashboard:** https://8nr7lmxsdphuj5bf5vdx4t.streamlit.app/
+
+**GitHub Repository:** https://github.com/Sumadwakulkarni008/sales
+
+---
 ## Project Description
 
 The Sales Analytics Dashboard is an interactive business intelligence application developed using Python, Streamlit, Pandas, and Plotly. It enables users to analyze sales performance through interactive charts, KPI metrics, and dynamic filters. The dashboard helps businesses gain insights into sales trends, customer behavior, product performance, and regional sales.
