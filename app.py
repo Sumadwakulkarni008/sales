@@ -7,7 +7,9 @@ st.set_page_config(page_title="Sales Analytics Dashboard", page_icon="📊", lay
 
 st.title("📊 Sales Analytics Dashboard")
 st.markdown("### Interactive Business Intelligence Dashboard")
-
+st.info(
+    "Analyze sales performance using interactive filters, charts, KPIs, and business insights."
+)
 @st.cache_data
 def load_data():
     df = pd.read_csv("Sample - Superstore.csv", encoding="latin1")
@@ -17,6 +19,8 @@ def load_data():
 df = load_data()
 
 # ---------------- Sidebar ----------------
+# ---------------- Sidebar ----------------
+st.sidebar.title("📊 Sales Dashboard")
 st.sidebar.header("🔎 Filters")
 
 region = st.sidebar.multiselect(
@@ -49,14 +53,19 @@ filtered_df = df[
 ].copy()
 
 filtered_df["Month"] = filtered_df["Order Date"].dt.to_period("M").astype(str)
-
+# ---------------- KPI Values ----------------
+total_sales = filtered_df["Sales"].sum()
+total_profit = filtered_df["Profit"].sum()
+total_orders = filtered_df["Order ID"].nunique()
+total_customers = filtered_df["Customer ID"].nunique()
 # ---------------- KPI ----------------
-c1,c2,c3,c4 = st.columns(4)
-c1.metric("💰 Total Sales", f"${filtered_df['Sales'].sum():,.2f}")
-c2.metric("📈 Total Profit", f"${filtered_df['Profit'].sum():,.2f}")
-c3.metric("🛒 Orders", filtered_df["Order ID"].nunique())
-c4.metric("👥 Customers", filtered_df["Customer ID"].nunique())
+# ---------------- KPI ----------------
+c1, c2, c3, c4 = st.columns(4)
 
+c1.metric("💰 Total Sales", f"${total_sales/1_000_000:.2f}M")
+c2.metric("📈 Total Profit", f"${total_profit/1_000_000:.2f}M")
+c3.metric("🛒 Orders", total_orders)
+c4.metric("👥 Customers", total_customers)
 st.divider()
 
 # ---------------- Charts Row 1 ----------------
@@ -122,8 +131,10 @@ st.subheader("📄 Filtered Dataset")
 st.dataframe(filtered_df,use_container_width=True,height=300)
 
 st.download_button(
-    "📥 Download Filtered Data",
-    filtered_df.to_csv(index=False),
-    "filtered_sales.csv",
-    "text/csv"
+    label="📥 Download Filtered Data",
+    data=filtered_df.to_csv(index=False),
+    file_name="filtered_sales.csv",
+    mime="text/csv"
 )
+st.markdown("---")
+st.caption("Developed by Sumadwa Kulkarni | Python • Streamlit • Pandas • Plotly")
